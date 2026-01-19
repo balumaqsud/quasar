@@ -1,5 +1,7 @@
 # Quasar App (quasar-task)
 
+website link: https://quasarvue.netlify.app
+
 this is the task
 
 ## Install the dependencies
