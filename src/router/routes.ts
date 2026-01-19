@@ -3,12 +3,34 @@ import type { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    redirect: '/products',
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
+  {
+    path: '/products',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: 'create',
+        name: 'products-create',
+        component: () => import('pages/ProductCreate.vue'),
+      },
+      {
+        path: ':id/edit',
+        name: 'products-edit',
+        component: () => import('pages/ProductEdit.vue'),
+      },
+      {
+        path: ':id',
+        name: 'products-detail',
+        component: () => import('pages/ProductDetail.vue'),
+      },
+      {
+        path: '',
+        name: 'products-list',
+        component: () => import('pages/ProductList.vue'),
+      },
+    ],
+  },
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

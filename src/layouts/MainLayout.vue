@@ -1,81 +1,71 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="lHh Lpr lFf" class="bg-grey-1">
+    <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+        <div class="full-width row items-center justify-between app-navbar-container">
+          <q-toolbar-title class="row items-center no-wrap">
+            <q-icon name="inventory_2" class="q-mr-sm" />
+            <div>
+              <div class="text-subtitle1">Vue + Quasar CRUD Task</div>
+            </div>
+          </q-toolbar-title>
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+          <div class="row items-center q-gutter-sm">
+            <q-btn
+              flat
+              dense
+              no-caps
+              color="white"
+              label="Inventory"
+              icon="table_view"
+              :to="{ name: 'products-list' }"
+            />
+            <q-btn
+              flat
+              dense
+              no-caps
+              color="white"
+              label="Add Product"
+              icon="add_circle"
+              :to="{ name: 'products-create' }"
+            />
+            <q-btn
+              flat
+              dense
+              no-caps
+              color="white"
+              label="Reports"
+              icon="insights"
+              disable
+            />
+            <q-btn
+              flat
+              dense
+              no-caps
+              color="white"
+              label="Settings"
+              icon="settings"
+              disable
+            />
+          </div>
+        </div>
       </q-toolbar>
     </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
-      </q-list>
-    </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer elevated class="bg-grey-8 text-grey-4">
+      <q-toolbar>
+        <q-toolbar-title class="text-center text-body2">
+          by oliver for Furor Progress
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
-
-const linksList: EssentialLinkProps[] = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
-  },
-];
-
-const leftDrawerOpen = ref(false);
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-}
+// layout is purely presentational
 </script>

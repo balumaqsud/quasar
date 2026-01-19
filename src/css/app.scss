@@ -1,1 +1,57 @@
 // app global css in SCSS form
+
+.app-page-container {
+  // Base padding for small screens
+  padding-left: 12px;
+  padding-right: 12px;
+
+  // Give the content a little breathing room below the header
+  padding-top: 12px;
+  padding-bottom: 24px;
+}
+
+// Medium screens and up (tablets)
+@media (min-width: 600px) {
+  .app-page-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+// Large screens and up (desktop)
+@media (min-width: 1024px) {
+  .app-page-container {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+// Navbar container - matches page container spacing
+.app-navbar-container {
+  // Base padding for small screens
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+// Medium screens and up (tablets)
+@media (min-width: 600px) {
+  .app-navbar-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+// Large screens and up (desktop)
+@media (min-width: 1024px) {
+  .app-navbar-container {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
