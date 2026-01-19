@@ -186,9 +186,16 @@ const productStore = useProductStore();
 
 const filter = ref('');
 
-const pagination = reactive({
+const pagination = reactive<{
+  page: number;
+  rowsPerPage: number;
+  sortBy: string | null;
+  descending: boolean;
+}>({
   page: 1,
   rowsPerPage: 10,
+  sortBy: 'name',
+  descending: false,
 });
 
 const columns: Array<{
@@ -254,9 +261,20 @@ const deleteDialog = reactive<{
   id: null,
 });
 
-function onUpdatePagination(val: { page: number; rowsPerPage: number }) {
+function onUpdatePagination(val: {
+  page: number;
+  rowsPerPage: number;
+  sortBy?: string | null;
+  descending?: boolean;
+}) {
   pagination.page = val.page;
   pagination.rowsPerPage = val.rowsPerPage;
+  if (typeof val.sortBy !== 'undefined') {
+    pagination.sortBy = val.sortBy;
+  }
+  if (typeof val.descending !== 'undefined') {
+    pagination.descending = val.descending;
+  }
 }
 
 function onRowClick(_evt: unknown, row: { id: number }) {

@@ -27,7 +27,9 @@
           outlined
           type="number"
           prefix="$"
-          :rules="[valRequired, valNonNegative]"
+          @focus="onNumberFocus('price')"
+          @blur="onNumberBlur('price')"
+          :rules="[valRequired, valIsNumber, valNonNegative]"
         />
       </div>
 
@@ -38,7 +40,9 @@
           dense
           outlined
           type="number"
-          :rules="[valRequired, valNonNegative]"
+          @focus="onNumberFocus('quantity')"
+          @blur="onNumberBlur('quantity')"
+          :rules="[valRequired, valIsNumber, valNonNegative]"
         />
       </div>
     </div>
@@ -106,6 +110,20 @@ watch(
   { deep: true }
 );
 
+function onNumberFocus(field: 'price' | 'quantity') {
+  if (localProduct[field] === 0) {
+    // Use null so the input appears empty while preserving numeric semantics
+    (localProduct as Record<string, number | null>)[field] = null;
+  }
+}
+
+function onNumberBlur(field: 'price' | 'quantity') {
+  const value = localProduct[field] as unknown;
+  if (value === null || value === '') {
+    (localProduct as Record<string, number | null>)[field] = 0;
+  }
+}
+
 function valRequired(val: unknown) {
   if (val === null || val === undefined) {
     return 'Required';
@@ -118,6 +136,20 @@ function valRequired(val: unknown) {
     return String(val).trim().length > 0 || 'Required';
   }
   return 'Required';
+}
+
+function valIsNumber(val: unknown) {
+  // Check if value is null or undefined (handled by valRequired)
+  if (val === null || val === undefined) {
+    return true;
+  }
+  // Check if it's already a valid number
+  if (typeof val === 'number' && !Number.isNaN(val)) {
+    return true;
+  }
+  // Try to convert to number and check if it's valid
+  const num = Number(val);
+  return (!Number.isNaN(num) && isFinite(num)) || 'Numbers required';
 }
 
 function valNonNegative(val: unknown) {
