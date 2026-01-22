@@ -1,5 +1,5 @@
 <template>
-  <q-page padding class="bg-grey-1">
+  <q-page class="q-py-md bg-grey-1">
     <q-breadcrumbs class="q-mb-md">
       <q-breadcrumbs-el
         icon="dashboard"
@@ -9,73 +9,77 @@
       <q-breadcrumbs-el :label="productTitle" />
     </q-breadcrumbs>
 
-    <q-card flat bordered class="q-pa-md">
-      <q-card-section class="row items-center justify-between q-gutter-md">
-        <div>
-          <div class="text-h5 text-primary q-mb-xs">
-            {{ product?.name || 'Product Details' }}
-          </div>
-          <div class="text-body2 text-grey-7">
-            View read-only information about this product.
-          </div>
-        </div>
-
-        <div class="row q-gutter-sm">
-          <q-btn
-            v-if="product"
-            color="primary"
-            unelevated
-            icon="edit"
-            label="Edit"
-            @click="goToEdit"
-          />
-          <q-btn
-            flat
-            color="primary"
-            icon="arrow_back"
-            label="Back to list"
-            :to="{ name: 'products-list' }"
-          />
-        </div>
-      </q-card-section>
-
-      <q-separator />
-
-      <q-card-section v-if="product">
-        <div class="row q-col-gutter-lg">
-          <div class="col-12 col-md-6">
-            <div class="text-caption text-grey-7">Name</div>
-            <div class="text-body1 q-mb-md">{{ product.name }}</div>
-
-            <div class="text-caption text-grey-7">Category</div>
-            <q-chip
-              square
-              color="primary"
-              text-color="white"
-              class="q-mb-md"
-            >
-              {{ product.category }}
-            </q-chip>
-          </div>
-
-          <div class="col-12 col-md-6">
-            <div class="text-caption text-grey-7">Price</div>
-            <div class="text-body1 q-mb-md">
-              {{ product.price.toFixed(2) }}
+    <div class="app-page-container">
+      <q-card flat bordered>
+        <q-card-section class="q-pa-lg">
+          <div class="row items-center justify-between q-gutter-md">
+            <div>
+              <div class="text-h5 text-primary q-mb-xs">
+                {{ product?.name || 'Product Details' }}
+              </div>
+              <div class="text-body2 text-grey-7">
+                View read-only information about this product.
+              </div>
             </div>
 
-            <div class="text-caption text-grey-7">Quantity</div>
-            <div class="text-body1">
-              {{ product.quantity }}
+            <div class="row q-gutter-sm">
+              <q-btn
+                v-if="product"
+                color="primary"
+                unelevated
+                icon="edit"
+                label="Edit"
+                @click="goToEdit"
+              />
+              <q-btn
+                flat
+                color="primary"
+                icon="arrow_back"
+                label="Back to list"
+                :to="{ name: 'products-list' }"
+              />
             </div>
           </div>
-        </div>
-      </q-card-section>
+        </q-card-section>
 
-      <q-card-section v-else class="text-grey-7">
-        Loading product details...
-      </q-card-section>
+        <q-separator />
+
+        <q-card-section class="q-pa-lg">
+          <div v-if="product" class="row q-col-gutter-lg">
+            <div class="col-12 col-md-6">
+              <div class="text-caption text-grey-7">Name</div>
+              <div class="text-body1 q-mb-md">{{ product.name }}</div>
+
+              <div class="text-caption text-grey-7">Category</div>
+              <q-chip
+                square
+                color="primary"
+                text-color="white"
+                class="q-mb-md"
+              >
+                {{ product.category }}
+              </q-chip>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="text-caption text-grey-7">Price</div>
+              <div class="text-body1 q-mb-md">
+                {{ formatCurrency(product.price) }}
+              </div>
+
+              <div class="text-caption text-grey-7">Quantity</div>
+              <div class="text-body1">
+                {{ product.quantity }}
+              </div>
+            </div>
+          </div>
+
+          <div v-else class="text-grey-7 text-center q-py-lg">
+            Loading product details...
+          </div>
+        </q-card-section>
     </q-card>
+    </div>
   </q-page>
 </template>
 
@@ -121,6 +125,14 @@ onMounted(() => {
 
   product.value = found;
 });
+
+function formatCurrency(value: number) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 2,
+  }).format(value);
+}
 
 function goToEdit() {
   if (!product.value) return;

@@ -90,7 +90,7 @@
           dense
         >
           <template #top>
-            <div class="row items-center justify-between full-width q-gutter-sm">
+            <div class="row items-center justify-between full-width q-gutter-sm q-px-md">
               <div class="col-12 col-md-4">
                 <q-input
                   v-model="filter"

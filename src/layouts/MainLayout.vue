@@ -3,7 +3,10 @@
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <div class="full-width row items-center justify-between app-navbar-container">
-          <q-toolbar-title class="row items-center no-wrap">
+          <q-toolbar-title
+            class="row items-center no-wrap cursor-pointer"
+            @click="goToMainPage"
+          >
             <q-icon name="inventory_2" class="q-mr-sm" />
             <div>
               <div class="text-subtitle1">Vue + Quasar CRUD Task</div>
@@ -59,7 +62,7 @@
     <q-footer elevated class="bg-grey-8 text-grey-4">
       <q-toolbar>
         <q-toolbar-title class="text-center text-body2">
-          by oliver for Furor Progress
+          by Oliver for Furor Progress
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
@@ -67,5 +70,11 @@
 </template>
 
 <script setup lang="ts">
-// layout is purely presentational
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const goToMainPage = () => {
+  void router.push({ name: 'products-list' });
+};
 </script>
